@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
+
+    <!-- JQuery -->
+    <!--script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.js"></script>
+
+    <title>Annotation</title>
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-8">
+                <div class="row">
+                    <!-- video display div -->
+                    <div class="col-md-12 text-center">
+                        <video style="max-width: 100%; max-height: 60vh;" autoplay controls id="vid"></video>
+                        <!-- progress bar -->
+                        <div class="progress" style="margin-bottom: 10px;" id="pbar">
+                            <div class="progress-bar" role="progressbar" style="width: 0%" id="pbar-played"></div>
+                        </div>
+                        <p id="test"></p>
+                    </div>
+                </div>
+                <div class="row">
+                    <!-- annotation div -->
+                    <div class="col-md-12">
+                        <div class="row">
+                            <div class="col-md-5">
+                                <img src="color_wheel_hole.png" style="max-width: 100%; max-height: 30vh;">
+                            </div>
+                            <div class="col-md-4">
+                                <!-- general emotion div -->
+                                <!--label>Emotion:
+                                <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                                    <label class="btn btn-secondary active">
+                                        <input type="checkbox" checked autocomplete="off"> Happy
+                                    </label>
+                                    <label class="btn btn-secondary active">
+                                        <input type="checkbox" checked autocomplete="off"> Sad
+                                    </label>
+                                    <label class="btn btn-secondary active">
+                                        <input type="checkbox" checked autocomplete="off"> Surprise
+                                    </label>
+                                    <label class="btn btn-secondary active">
+                                        <input type="checkbox" checked autocomplete="off"> Angry
+                                    </label>
+                                    <label class="btn btn-secondary active">
+                                        <input type="checkbox" checked autocomplete="off"> Fear
+                                    </label>
+                                    <label class="btn btn-secondary active">
+                                        <input type="checkbox" checked autocomplete="off"> Disgust
+                                    </label>
+                                </div>
+                                </label-->
+                                <div class="row"><div class="col-md-12"><p id="test-emo">Emotion: </p></div></div>
+                                <div class="row"><div class="col-md-12">
+                                    <button type="button" class="btn btn-danger disabled">Finished</button>
+                                </div></div>
+                            </div>
+                            <div class="col-md-3">
+                                <label>Tags:
+                                    <div class="list-group" style="max-height: 30vh; overflow-y: scroll; margin-bottom: 10px; margin-top: 10px;">
+                                        <button type="button" class="list-group-item list-group-item-action">Music</button>
+                                        <button type="button" class="list-group-item list-group-item-action">Juxtaposition</button>
+                                    </div>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="row">
+                    <!-- list div -->
+                    <div class="col-md-12">
+                        <div id="list-video" class="list-group" style="max-height: 90vh; overflow-y: scroll; margin-bottom: 10px; margin-top: 10px;"></div>
+                    </div>
+                </div>
+                <div class="row">
+                    <!-- user div -->
+                    <div class="col-md-12 text-center">
+                        <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                            <label class="btn btn-secondary active">
+                                <input type="radio" name="annotator" value="candice" id="annotator1" checked>Candice
+                            </label>
+                            <label class="btn btn-secondary">
+                                <input type="radio" name="annotator" value="neo" id="annotator2">Neo
+                            </label>
+                            <label class="btn btn-secondary">
+                                <input type="radio" name="annotator" value="guest" id="annotator3">Guest
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <!--script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script-->
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
+
+    <script type="text/javascript" src="annotation.js"></script>
+</body>
+</html>
