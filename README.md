@@ -6,7 +6,7 @@ The videos to be annotated are put in the subfolder `\videodataset`. Each of the
 
 `video.json` has all names of the video files including the subscripts in one array accessed by the key `nameArray`.
 
-Annotations are saved in json files under the annotator's name. The keys are the file names of the video. (to be implemented)
+Annotations are saved in json files under the annotator's name. The keys are the video names. (to be implemented)
 
 ## Panels
 The webpage is splited into three panels.
