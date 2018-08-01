@@ -6,7 +6,10 @@ This interface is built using node.js. To run the interface, run `server.js` usi
 ```
 $ node server.js
 ```
-The interface will be served at `localhost:3000`.
+If the code is working, the following line will be outputted and the interface will be served at `localhost:3000`.
+```
+File server running on port 3000
+```
 
 The videos to be annotated are put in the subfolder `\videodataset`. Each of them is either `.mp4` or `.webm`.
 
