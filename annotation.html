@@ -17,71 +17,11 @@
 <body>
     <div class="container-fluid">
         <div class="row">
-            <div class="col-md-8">
-                <div class="row">
-                    <!-- video display div -->
-                    <div class="col-md-12 text-center">
-                        <video style="max-width: 100%; max-height: 60vh;" autoplay controls id="vid"></video>
-                        <!-- progress bar -->
-                        <div class="progress" style="margin-bottom: 10px;" id="pbar">
-                            <div class="progress-bar" role="progressbar" style="width: 0%" id="pbar-played"></div>
-                        </div>
-                        <p id="test"></p>
-                    </div>
-                </div>
-                <div class="row">
-                    <!-- annotation div -->
-                    <div class="col-md-12">
-                        <div class="row">
-                            <div class="col-md-5">
-                                <img src="color_wheel_hole.png" style="max-width: 100%; max-height: 30vh;">
-                            </div>
-                            <div class="col-md-4">
-                                <!-- general emotion div -->
-                                <!--label>Emotion:
-                                <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                                    <label class="btn btn-secondary active">
-                                        <input type="checkbox" checked autocomplete="off"> Happy
-                                    </label>
-                                    <label class="btn btn-secondary active">
-                                        <input type="checkbox" checked autocomplete="off"> Sad
-                                    </label>
-                                    <label class="btn btn-secondary active">
-                                        <input type="checkbox" checked autocomplete="off"> Surprise
-                                    </label>
-                                    <label class="btn btn-secondary active">
-                                        <input type="checkbox" checked autocomplete="off"> Angry
-                                    </label>
-                                    <label class="btn btn-secondary active">
-                                        <input type="checkbox" checked autocomplete="off"> Fear
-                                    </label>
-                                    <label class="btn btn-secondary active">
-                                        <input type="checkbox" checked autocomplete="off"> Disgust
-                                    </label>
-                                </div>
-                                </label-->
-                                <div class="row"><div class="col-md-12"><p id="test-emo">Emotion: </p></div></div>
-                                <div class="row"><div class="col-md-12">
-                                    <button type="button" class="btn btn-danger disabled">Finished</button>
-                                </div></div>
-                            </div>
-                            <div class="col-md-3">
-                                <label>Tags:
-                                    <div class="list-group" style="max-height: 30vh; overflow-y: scroll; margin-bottom: 10px; margin-top: 10px;">
-                                        <button type="button" class="list-group-item list-group-item-action">Music</button>
-                                        <button type="button" class="list-group-item list-group-item-action">Juxtaposition</button>
-                                    </div>
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
             <div class="col-md-4">
                 <div class="row">
                     <!-- list div -->
                     <div class="col-md-12">
-                        <div id="list-video" class="list-group" style="max-height: 90vh; overflow-y: scroll; margin-bottom: 10px; margin-top: 10px;"></div>
+                        <div id="list-video" class="list-group" style="max-height: 85vh; overflow-y: scroll; margin-bottom: 10px; margin-top: 10px;"></div>
                     </div>
                 </div>
                 <div class="row">
@@ -95,8 +35,62 @@
                                 <input type="radio" name="annotator" value="neo" id="annotator2">Neo
                             </label>
                             <label class="btn btn-secondary">
-                                <input type="radio" name="annotator" value="guest" id="annotator3">Guest
+                                <input type="radio" name="annotator" value="Victor" id="annotator3">Victor
                             </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <!-- save/load div -->
+                    <div class="col-md-12 text-center"  style="margin-top: 10px;">
+                        <button type="button" class="btn btn-primary" id="file-load">Load</button>
+                        <button type="button" class="btn btn-primary" id="file-save">Save</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-8 d-none" id="div-vid-ano">
+                <div class="row">
+                    <!-- video display div -->
+                    <div class="col-md-12 text-center">
+                        <video style="max-width: 100%; max-height: 60vh;" autoplay controls id="vid"></video>
+                        <!-- progress bar -->
+                        <div class="progress" style="margin-bottom: 10px;" id="pbar">
+                            <div class="progress-bar" role="progressbar" style="width: 0%" id="pbar-played"></div>
+                        </div>
+                        <p id="test"></p>
+                        <p id="test-pl"></p>
+                    </div>
+                </div>
+                <div class="row">
+                    <!-- annotation div -->
+                    <div class="col-md-12">
+                        <div class="row">
+                            <div class="col-md-5">
+                                <img src="color_wheel_hole.png" style="max-width: 100%; max-height: 30vh;">
+                            </div>
+                            <div class="col-md-4">
+                                <div class="row"><div class="col-md-12"><p id="test-emo">Emotion: </p></div></div>
+                                <div class="row"><div class="col-md-12">
+                                    <button type="button" class="btn btn-danger disabled">Finished</button>
+                                </div></div>
+                                <div class="row"><div class="col-md-12" style="margin-top: 10px;">
+                                    <button type="button" class="btn btn-success" id="btn-pl">Punchline Off</button>
+                                </div></div>
+                                <div class="row"><div class="col-md-12" style="margin-top: 10px;">
+                                    <button type="button" class="btn btn-success" id="btn-clear">Clear Punchline</button>
+                                </div></div>
+                            </div>
+                            <div class="col-md-3">
+                                <label>Tags:
+                                    <div class="list-group" style="max-height: 30vh; overflow-y: scroll; margin-bottom: 10px; margin-top: 10px;">
+                                        <button type="button" class="list-group-item list-group-item-action">Music</button>
+                                        <button type="button" class="list-group-item list-group-item-action">Juxtaposition</button>
+                                        <button type="button" class="list-group-item list-group-item-action">Pain</button>
+                                        <button type="button" class="list-group-item list-group-item-action">Laughter</button>
+                                        <button type="button" class="list-group-item list-group-item-action">Crying</button>
+                                    </div>
+                                </label>
+                            </div>
                         </div>
                     </div>
                 </div>
