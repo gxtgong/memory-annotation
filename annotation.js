@@ -42,11 +42,7 @@ $.getJSON('video.json', function(data){
         $("video").attr('src', 'videodataset/'+videosrc);
         
         //save annotation to disk
-        $.post(annotation.annotator+'.json', JSON.stringify(annotation, null, 4), function(data, status){
-            if (status == 'success') {
-                console.log("SAVE "+annotation.annotator+'.json')
-            }
-        });
+        saveToDisk();
     });
 });
 
@@ -60,6 +56,11 @@ vidDOM.addEventListener('loadedmetadata', function(){
 
     //apply changes to annotation interface
 
+    applyInterface();
+});
+
+function applyInterface() {
+    console.log("INTERFACE");
     //turn off pl button
     booPL = false;;
     document.getElementById("btn-pl").classList.remove("btn-warning");
@@ -82,7 +83,8 @@ vidDOM.addEventListener('loadedmetadata', function(){
         document.getElementById("check-finished").checked = false;
     }
     document.getElementById("div-vid-ano").classList.remove("d-none");
-});
+}
+
 
 function applyTags() {
     $(".list-group button").each(function(){
@@ -93,6 +95,17 @@ function applyTags() {
             this.classList.remove("active");
         }
     })
+}
+
+function saveToDisk(callback){
+    if (callback == null) {
+        callback = (function(data, status){
+            if (status == 'success') {
+                console.log("SAVE "+annotator+'.json')
+            }
+        });
+    }
+    $.post(annotator+'.json', JSON.stringify(annotation, null, 4), callback);
 }
 
 function saveToSrc(videosrc){
@@ -126,8 +139,8 @@ function loadFromSrc(videosrc){
 }
 
 function applyAnnotationOf(name) { // apply annotation to the list of names (not a particular video)
+    console.log("LOAD " + name+'.json');
     $.getJSON(name+'.json', function(data){
-        console.log("LOAD " + name+'.json');
         annotation = data;
         $("a").each(function(index){
             currentSRC = $(this).html();
@@ -143,7 +156,9 @@ function applyAnnotationOf(name) { // apply annotation to the list of names (not
                 this.classList.remove("list-group-item-warning");
                 this.classList.remove("list-group-item-success");
             }
-        })
+        });
+        loadFromSrc(videosrc);
+        applyInterface();
     });
 }
 
@@ -219,14 +234,13 @@ $(document).ready(function(){
     });
 
     $('input[type=radio][name=annotator]').change(function(){
-        //save annotation to disk
-        $.post(annotation.annotator+'.json', JSON.stringify(annotation, null, 4), function(data, status){
-            if (status == 'success') {
-                console.log("SAVE "+annotation.annotator+'.json')
-            }
+        newAnnotator = this.value;
+        saveToSrc(videosrc);
+        saveToDisk(function(){
+            console.log("SAVE "+annotator+".json");
+            annotator = newAnnotator;
+            applyAnnotationOf(annotator);
         });
-        annotator = this.value;
-        applyAnnotationOf(annotator);
     })
 });
 
