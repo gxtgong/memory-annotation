@@ -35,18 +35,18 @@
                                 <input type="radio" name="annotator" value="neo" id="annotator2">Neo
                             </label>
                             <label class="btn btn-secondary">
-                                <input type="radio" name="annotator" value="Victor" id="annotator3">Victor
+                                <input type="radio" name="annotator" value="victor" id="annotator3">Victor
                             </label>
                         </div>
                     </div>
                 </div>
-                <div class="row">
-                    <!-- save/load div -->
+                <!-- save/load div -->
+                <!--div class="row">
                     <div class="col-md-12 text-center"  style="margin-top: 10px;">
-                        <button type="button" class="btn btn-primary" id="file-load">Load</button>
+                        <button type="button" class="btn btn-primary" id="file-load">Reload</button>
                         <button type="button" class="btn btn-primary" id="file-save">Save</button>
                     </div>
-                </div>
+                </div-->
             </div>
             <div class="col-md-8 d-none" id="div-vid-ano">
                 <div class="row">
@@ -57,8 +57,8 @@
                         <div class="progress" style="margin-bottom: 10px;" id="pbar">
                             <div class="progress-bar" role="progressbar" style="width: 0%" id="pbar-played"></div>
                         </div>
-                        <p id="test"></p>
-                        <p id="test-pl"></p>
+                        <p id="test" class="d-none"></p>
+                        <p id="test-pl" class="d-none"></p>
                     </div>
                 </div>
                 <div class="row">
@@ -71,7 +71,10 @@
                             <div class="col-md-4">
                                 <div class="row"><div class="col-md-12"><p id="test-emo">Emotion: </p></div></div>
                                 <div class="row"><div class="col-md-12">
-                                    <button type="button" class="btn btn-danger disabled">Finished</button>
+                                    <!--button type="button" class="btn btn-danger" id="btn-finished">Finished</button-->
+                                    <div class="checkbox">
+                                        <label><input type="checkbox" value="1" id="check-finished">Finished</label>
+                                    </div>
                                 </div></div>
                                 <div class="row"><div class="col-md-12" style="margin-top: 10px;">
                                     <button type="button" class="btn btn-success" id="btn-pl">Punchline Off</button>
@@ -99,8 +102,7 @@
     </div>
 
     <!-- Optional JavaScript -->
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <!--script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script-->
+    <!-- Popper.js, then Bootstrap JS -->
     
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>

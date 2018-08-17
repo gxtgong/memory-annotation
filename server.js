@@ -98,6 +98,7 @@ http.createServer(function(req, res) {
             fs.writeFileSync(name+".json", body);
             fs.writeFile(name+".json", body, function(){
                 console.log("WRITE annotation" + " TO " + name + ".json");
+                res.end();
             });
     	})
     }

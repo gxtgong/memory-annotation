@@ -18,6 +18,10 @@ var emotion = null;
 
 var complete = false;
 
+var currentA;
+
+var annotator = "candice";
+
 $.getJSON('video.json', function(data){
 
     console.log("video.json Read");
@@ -29,56 +33,55 @@ $.getJSON('video.json', function(data){
     annotation["annotator"] = "candice";
     // load video 
     $("a").click(function(){
-        //save last info
-        if (videosrc != null) {
-            annotation[videosrc] = {};
-            annotation[videosrc]["intervals"] = intervals;
-            annotation[videosrc]["tags"] = tags;
-            annotation[videosrc]["complete"] = complete;
-            
-
-        }
-
-        //load video src
+        //save last info into annotation under key src
+        saveToSrc(videosrc);
+        //load new video and its annotation
+        currentA = this;
         videosrc = $(this).html();
         console.log(videosrc);
         $("video").attr('src', 'videodataset/'+videosrc);
-
-        //after video is loaded, add eventlistener
-        vidDOM.addEventListener('loadedmetadata', function(){
-            //console duration
-            console.log(vidDOM.duration);
-            //retrieve previous annoatation
-            if (videosrc in annotation) {
-                intervals = annotation[videosrc]["intervals"];
-                tags = annotation[videosrc]["tags"];
-                emotion = annotation[videosrc]["emotion"];
-            }else{
-                console.log("new video");
-                intervals = [[0,vidDOM.duration]];
-                tags = {};
-                emotion = [];
+        
+        //save annotation to disk
+        $.post(annotation.annotator+'.json', JSON.stringify(annotation, null, 4), function(data, status){
+            if (status == 'success') {
+                console.log("SAVE "+annotation.annotator+'.json')
             }
-            document.getElementById("test-pl").innerHTML = intervals.toString();
         });
-
-        //turn off pl button
-        booPL = false;
-        document.getElementById("btn-pl").classList.remove("btn-warning");
-        document.getElementById("btn-pl").classList.add("btn-success");
-        document.getElementById("btn-pl").innerHTML = "Punchline Off";
-        plStart = null;
-
-        //apply changes to annotation interface
-        applyTags();
-        if (emotion == null || emotion[0] == null) {
-            $("#test-emo").html("Emotion: ");
-        }else{
-            $("#test-emo").html("Emotion: ("+emotion[0]+" "+emotion[1]+")");
-        }
-
-        document.getElementById("div-vid-ano").classList.remove("d-none");
     });
+});
+
+//after video is loaded, add eventlistener
+vidDOM.addEventListener('loadedmetadata', function(){
+    //console duration
+    console.log(vidDOM.duration);
+    //retrieve previous annoatation
+    loadFromSrc(videosrc);
+    document.getElementById("test-pl").innerHTML = intervals.toString();
+
+    //apply changes to annotation interface
+
+    //turn off pl button
+    booPL = false;;
+    document.getElementById("btn-pl").classList.remove("btn-warning");
+    document.getElementById("btn-pl").classList.add("btn-success");
+    document.getElementById("btn-pl").innerHTML = "Punchline Off";
+    plStart = null;
+    //apply tags
+    applyTags();
+    //restore emotion coordinate
+    if (emotion == null || emotion[0] == null) {
+        $("#test-emo").html("Emotion: ");
+    }else{
+        $("#test-emo").html("Emotion: ("+emotion[0]+" "+emotion[1]+")");
+    }
+    //adjust finish button
+    console.log("COMPLETE "+complete);
+    if (complete) {
+        document.getElementById("check-finished").checked = true;
+    }else{
+        document.getElementById("check-finished").checked = false;
+    }
+    document.getElementById("div-vid-ano").classList.remove("d-none");
 });
 
 function applyTags() {
@@ -92,20 +95,55 @@ function applyTags() {
     })
 }
 
+function saveToSrc(videosrc){
+    if (videosrc != null) {
+        if (!(videosrc in annotation)){
+            $(currentA).addClass("list-group-item-warning");
+        }
+        annotation[videosrc] = {};
+        annotation[videosrc]["intervals"] = intervals;
+        annotation[videosrc]["tags"] = tags;
+        annotation[videosrc]["complete"] = complete;
+        annotation[videosrc]["emotion"] = emotion;
+    }
+}
+
+function loadFromSrc(videosrc){
+    if (videosrc != null) {
+        if (videosrc in annotation){
+            intervals = annotation[videosrc]["intervals"];
+            complete = annotation[videosrc]["complete"]
+            tags = annotation[videosrc]["tags"];
+            emotion = annotation[videosrc]["emotion"];
+        }else{
+            intervals = [[0,vidDOM.duration]];
+            complete = false;
+            tags = {};
+            emotion = [];
+        }
+    }
+    return false;
+}
+
 function applyAnnotationOf(name) { // apply annotation to the list of names (not a particular video)
     $.getJSON(name+'.json', function(data){
-        console.log(name+'.json Read');
-        console.log(JSON.stringify(data));
+        console.log("LOAD " + name+'.json');
         annotation = data;
-        for (var vn in data) {
-            if (vn !== "annotator") {
-                if (data[vn]["complete"]) {
-                    document.getElementById(vn).classList.add("list-group-item-success");
+        $("a").each(function(index){
+            currentSRC = $(this).html();
+            if (currentSRC in annotation) {
+                if (annotation[currentSRC]["complete"]){
+                    this.classList.add("list-group-item-success");
+                    this.classList.remove("list-group-item-warning");
                 } else {
-                    document.getElementById(vn).classList.add("list-group-item-warning");
+                    this.classList.add("list-group-item-warning");
+                    this.classList.remove("list-group-item-success");
                 }
+            }else{
+                this.classList.remove("list-group-item-warning");
+                this.classList.remove("list-group-item-success");
             }
-        }
+        })
     });
 }
 
@@ -146,7 +184,21 @@ $(document).ready(function(){
     $("#btn-clear").click(function(){
         intervals = [[0,vidDOM.duration]];
         intervalsToBars();
-    })
+    });
+
+    //finish checkbox
+    $("#check-finished").change(function(){
+        console.log("CHECK");
+        if (this.checked){
+            complete = true;
+            $(currentA).removeClass("list-group-item-warning");
+            $(currentA).addClass("list-group-item-success");
+        }else{
+            complete = false;
+            $(currentA).removeClass("list-group-item-success");
+            $(currentA).addClass("list-group-item-warning");
+        }
+    });
 
     // img for emo
     $("img").click(function(e){
@@ -166,10 +218,15 @@ $(document).ready(function(){
         $("#test-pl").html(intervals.toString());
     });
 
-    $("#file-save").click(function(e){
+    $('input[type=radio][name=annotator]').change(function(){
+        //save annotation to disk
         $.post(annotation.annotator+'.json', JSON.stringify(annotation, null, 4), function(data, status){
-            console.log("Data: "+ data + " Status: " + status);
+            if (status == 'success') {
+                console.log("SAVE "+annotation.annotator+'.json')
+            }
         });
+        annotator = this.value;
+        applyAnnotationOf(annotator);
     })
 });
 
