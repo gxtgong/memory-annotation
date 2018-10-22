@@ -241,7 +241,7 @@ $(document).ready(function(){
             annotator = newAnnotator;
             applyAnnotationOf(annotator);
         });
-    })
+    });
 });
 
 var annoName = $('input[name="annotator"]:checked').val();
